@@ -1,0 +1,167 @@
+{% extends "base.html" %}
+
+{% block SEManPowerTask %}
+<main>
+    <div class="container-fluid px-4">
+        <div class="row" style="margin-top: 3%;">
+            <div class="col-xl-8 m-auto">
+                <div class="card mb-4" style="background-color: #212529;">
+                    <div class="card-body">
+                        <form method="POST" id="man_power_task" action="">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-12 text-center">
+                                            <h2 style="font-size: 60px;font-weight:400;color:#ffffff;text-shadow: 2px 2px 10px #ffffff;margin-bottom: 40px;">Add ManPower Task</h2>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="row">
+                                        <div class="col-4 d-flex justify-content-center align-items-center">
+                                            <label style="margin: 0;color:#ffffff;">Man Power Type <span style="color: #dc3545;">*</span></label>
+                                        </div>
+                                        <div class="col-8">
+                                            <select class="form-control selectpicker mt-2" data-live-search="true" id="man_power_types" name="man_power_types" required>
+                                                <option value="" selected disabled>Choose Type...</option>
+                                                {% for type in manPowerTypes %}
+                                                <option value="{{type.0}}">{{type.1}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div> -->
+                                    <div class="row">
+                                        <div class="col-4 d-flex justify-content-center align-items-center">
+                                            <label style="margin: 0;color:#ffffff;">Task <span style="color: #dc3545;">*</span></label>
+                                        </div>
+                                        <div class="col-8">
+                                            <select class="form-control selectpicker mt-2" data-live-search="true" id="task_select" name="task_select" required>
+                                                <option value="" selected disabled>Choose Task...</option>
+                                                {% for tskLst in tasks_list %}
+                                                <option value="{{tskLst.id}}" id="{{tskLst.man_power_type}}">{{tskLst.name}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row d-none" id="eng_row">
+                                        <div class="col-4 d-flex justify-content-center align-items-center">
+                                            <label style="margin: 0;color:#ffffff;">Representative ID <span style="color: #dc3545;">*</span></label>
+                                        </div>
+                                        <div class="col-8">
+                                            <input type="hidden" id="userid" value="{{user.id}}">
+                                            <select class="form-control selectpicker mt-2" data-live-search="true" id="eng_select" name="eng_select">
+                                                <option value="" selected disabled>Choose Engineer...</option>
+                                                {% for englst in eng_list %}
+                                                <option value="{{englst.id}}">{{englst.first_name}} {{englst.last_name}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row d-none" id="eng_rep_row">
+                                        <div class="col-4 d-flex justify-content-center align-items-center">
+                                            <label style="margin: 0;color:#ffffff;">Representative ID <span style="color: #dc3545;">*</span></label>
+                                        </div>
+                                        <div class="col-8">
+                                            <select class="form-control mt-2" id="eng_rep_select" name="eng_rep_select" disabled>
+                                                <option value="{{user.id}}">{{user.first_name}} {{user.last_name}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row d-none" id="tech_row">
+                                        <div class="col-4 d-flex justify-content-center align-items-center">
+                                            <label style="margin: 0;color:#ffffff;">Technicion <span style="color: #dc3545;">*</span></label>
+                                        </div>
+                                        <div class="col-8">
+                                            <select class="form-control selectpicker mt-2" data-live-search="true" id="tech_select" name="tech_select">
+                                                <option value="" selected disabled>Choose Technicion...</option>
+                                                {% for tchlst in tech_list %}
+                                                <option value="{{tchlst.id}}">{{tchlst.first_name}} {{tchlst.last_name}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-4 d-flex justify-content-center align-items-center">
+                                            <label style="margin: 0;color:#ffffff;">Station <span style="color: #dc3545;">*</span></label>
+                                        </div>
+                                        <div class="col-8">
+                                            <select class="form-control selectpicker mt-2" data-dropup-auto="false" data-live-search="true" id="station_select" name="station_select" required>
+                                                <option value="" selected disabled>Choose Station...</option>
+                                                {% for stLst in station_list %}
+                                                <option value="{{stLst.id}}">{{stLst.station_id}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row d-none" id="ticket_row">
+                                        <div class="col-4 d-flex justify-content-center align-items-center">
+                                            <label style="margin: 0;color:#ffffff;">Ticket <span style="color: #dc3545;">*</span></label>
+                                        </div>
+                                        <div class="col-8">
+                                            <input type="text" class="form-control mt-2" name="ticket" id="ticket" placeholder="Ex. 12345">
+                                        </div>
+                                    </div>
+                                    <!-- <div class="row">
+                                        <div class="col-4 d-flex justify-content-center align-items-center">
+                                            <label style="margin: 0;color:#ffffff;">Task <span style="color: #dc3545;">*</span></label>
+                                        </div>
+                                        <div class="col-8">
+                                            <select class="form-control selectpicker mt-2" data-live-search="true" id="task_select" name="task_select" required>
+                                                <option value="" selected disabled>Choose Task...</option>
+                                                {% for tskLst in task_list %}
+                                                <option value="{{tskLst.id}}">{{tskLst.name}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div> -->
+                                    <div class="row">
+                                        <div class="col-4 d-flex justify-content-center align-items-center">
+                                            <label style="margin: 0;color:#ffffff;">Visit Date <span style="color: #dc3545;">*</span></label>
+                                        </div>
+                                        <div class="col-8">
+                                            <input type="datetime-local" class="form-control mt-2" name="visit" id="visit" required>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-4 d-flex justify-content-center align-items-center">
+                                            <label style="margin: 0;color:#ffffff;">Notes</label>
+                                        </div>
+                                        <div class="col-8">
+                                            <textarea class="form-control mt-2" name="notes" id="notes" cols="30" rows="2" placeholder="Type your notes..."></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-4 d-flex justify-content-center align-items-center">
+                                            <label style="margin: 0;color:#ffffff;"><span style="color: #dc3545;">* Required Fields</span></label>
+                                        </div>
+                                        <div class="col-8">
+                                            <input class="btn btn-success pl-4 pr-4 mt-2" form="man_power_task" type="submit" value="Insert">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% if 'done' in request.GET %}
+            <div class="col-xl-4 d-flex justify-content-center align-items-center">
+                <h1 style="font-size: 70px;font-weight: bold;color: #198754">Task Inserted Successfully <i class="fa-solid fa-check"></i></h1>
+            </div>
+            {% endif %}
+            {% if 'fail' in request.GET %}
+            <div class="col-xl-4 d-flex justify-content-center align-items-center">
+                <h1 style="font-size: 70px;font-weight: bold;color: #dc3545">Task Approved Before<br> <i class="fa-solid fa-xmark"></i></h1>
+            </div>
+            {% endif %}
+        </div>
+        <!-- {% if 'done' in request.GET %}
+        <div class="row">
+            <div class="col-12 text-center">
+                <h1 style="font-size: 60px;font-weight: bold;color: #198754">Task Inserted Successfully <i class="fa-solid fa-check"></i></h1>
+            </div>
+        </div>
+        {% endif %} -->
+    </div>
+</main>
+{% endblock %}
+

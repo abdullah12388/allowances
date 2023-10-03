@@ -1,0 +1,265 @@
+{% extends "base.html" %}
+
+{% block CCAllowances %}
+<main>
+    <div class="container-fluid px-4">
+        <h1 class="mt-4 mb-4">Form | Select For Details</h1>
+        <div class="row mb-4">
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fa-solid fa-filter me-1"></i>
+                        Datetime Filters
+                        <div style="float: right;">
+                            <button class="btn btn-success btn-sm" id="submitBtn">Submit</button>
+                            <button class="btn btn-danger btn-sm" id="resetBtn">Reset ALL</button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-4 d-flex justify-content-center align-items-center">
+                                <label style="margin: 0;">Interval Start</label>
+                            </div>
+                            <div class="col-8">
+                                <input type="datetime-local" class="form-control mt-2" name="interval_start" id="interval_start">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4 d-flex justify-content-center align-items-center">
+                                <label style="margin: 0;">Interval End</label>
+                            </div>
+                            <div class="col-8">
+                                <input type="datetime-local" class="form-control mt-2" name="interval_end" id="interval_end">
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fa-solid fa-file"></i>
+                        Total Tasks
+                    </div>
+                    <div class="card-body text-center">
+                        <h1 id="total_sheets">00</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fa-solid fa-sack-dollar"></i>
+                        Total Allowances
+                    </div>
+                    <div class="card-body text-center">
+                        <h1 id="total_allowances">00</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="card mb-4">
+            {% if tasks|length < 1 %}
+            <div class="card-header bg-danger" style="color: #fff;">
+            {% else %}
+            <div class="card-header">
+            {% endif %}
+                <i class="fas fa-table me-1"></i>
+                Tasks Table
+            </div>
+            <div class="card-body table-striped">
+                <div id="toolbar" class="select" style="display: flex;">
+                    <input type="text" class="form-control" style="margin-right:5px;" id="exportFileName"
+                        placeholder="Export File Name">
+                    <select class="form-control" style="margin-right:5px;">
+                        <option value="">Export Basic</option>
+                        <option value="all">Export All</option>
+                        <option value="selected">Export Selected</option>
+                    </select>
+                    <button class="btn" style="color: #fff;background-color: #6c757d" id="print_selected">Print
+                        Selected</button>
+                </div>
+                <table id="TasksTbl" data-toggle="table" data-pagination="true" data-search="true"
+                    data-show-columns="true" data-show-toggle="true" data-show-columns-search="true"
+                    data-show-pagination-switch="true" data-show-fullscreen="true" data-searchable="true"
+                    data-show-print="true" data-print-as-filtered-and-sorted-on-ui="true"
+                    data-mobile-responsive="true" data-key-events="true" data-show-search-clear-button="true"
+                    data-filter-control="true" data-show-export="true" data-click-to-select="true"
+                    data-toolbar="#toolbar">
+                    <thead>
+                        <tr>
+                            <th data-field="id" data-sortable="true" data-filter-control="input">ID</th>
+                            <th data-field="name" data-sortable="true" data-filter-control="select">Task Name</th>
+                            <th data-field="allowances" data-sortable="true" data-filter-control="input">Task Allowances</th>
+                            <th data-field="man_power_type" data-sortable="true" data-filter-control="select">Man Power Type</th>
+                            <th data-field="add_date" data-sortable="true" data-filter-control="input">Add Date</th>
+                            <th data-sortable="true" data-filter-control="input">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {%for task in tasks%}
+                        <tr>
+                            <td>{{task.id}}</td>
+                            <td>{{task.name}}</td>
+                            <td>{{task.allowances}}</td>
+                            <td>{{task.get_man_power_type_display}}</td>
+                            <td>{{task.add_date}}</td>
+                            <td class="d-flex justify-content-center align-items-center">
+                                <button class="btn btn-success mr-2" type="button" data-toggle="modal" data-target="#edit_modal_{{task.id}}"><i class="fa-solid fa-pen"></i></button>
+                                <button class="btn btn-danger ml-2" type="button" data-toggle="modal" data-target="#delete_modal_{{task.id}}"><i class="fa-solid fa-trash"></i></button>
+                            </td>
+                        </tr>
+                        {%endfor%}
+                    </tbody>
+                </table>
+            </div>
+        </div> -->
+        <div class="card mb-4 mt-3">
+            <div class="card-header">
+                <i class="fas fa-table me-1"></i>
+                Allowances Table
+                <div style="float: right;">
+                    <button class="btn btn-secondary btn-sm" id="view_all">View All</button>
+                </div>
+            </div>
+            <div class="card-body table-striped">
+                <!-- <div id="toolbar" class="select" style="display: flex;">
+                    <input type="text" class="form-control" style="margin-right:5px;" id="exportFileName"
+                        placeholder="Export File Name">
+                    <select class="form-control" style="margin-right:5px;">
+                        <option value="">Export Basic</option>
+                        <option value="all">Export All</option>
+                        <option value="selected">Export Selected</option>
+                    </select>
+                    <button class="btn" style="color: #fff;background-color: #6c757d" id="print_selected">Print
+                        Selected</button>
+                </div> -->
+                <table id="allowancesTbl" data-toggle="table" data-pagination="true" data-search="true"
+                    data-show-columns="true" data-show-toggle="true" data-show-columns-search="true"
+                    data-show-pagination-switch="true" data-show-fullscreen="true" data-searchable="true"
+                    data-show-print="true" data-print-as-filtered-and-sorted-on-ui="true"
+                    data-mobile-responsive="true" data-key-events="true" data-show-search-clear-button="true"
+                    data-filter-control="true" data-show-export="true" data-click-to-select="true"
+                    data-toolbar="#toolbar">
+                    <thead>
+                        <tr>
+                            <th data-field="eng_name__id" data-sortable="true" data-filter-control="input">ID</th>
+                            <th data-field="eng_name__first_name" data-sortable="true" data-filter-control="input">Eng. First Name</th>
+                            <th data-field="eng_name__last_name" data-sortable="true" data-filter-control="input">Eng. Last Name</th>
+                            <th data-field="sheets" data-sortable="true" data-filter-control="input">Tasks</th>
+                            <th data-field="allowances" data-sortable="true" data-filter-control="input">Allowances</th>
+                            <th data-field="actions" data-sortable="true" data-filter-control="input">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="view_details" tabindex="-1" role="dialog" aria-labelledby="approveModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Allowances Details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- <div id="details_toolbar" class="select" style="display: flex;">
+                        <input type="text" class="form-control" style="margin-right:5px;" id="details_exportFileName"
+                            placeholder="Export File Name">
+                        <select class="form-control" style="margin-right:5px;">
+                            <option value="">Export Basic</option>
+                            <option value="all">Export All</option>
+                            <option value="selected">Export Selected</option>
+                        </select>
+                        <button class="btn" style="color: #fff;background-color: #6c757d" id="details_print_selected">Print
+                            Selected</button>
+                    </div> -->
+                    <table id="allowancesDetailsTbl" data-toggle="table" data-pagination="true" data-search="true"
+                        data-show-columns="true" data-show-toggle="true" data-show-columns-search="true"
+                        data-show-pagination-switch="true" data-show-fullscreen="true" data-searchable="true"
+                        data-show-print="true" data-print-as-filtered-and-sorted-on-ui="true"
+                        data-mobile-responsive="true" data-key-events="true" data-show-search-clear-button="true"
+                        data-filter-control="true" data-show-export="true" data-click-to-select="true"
+                        data-toolbar="#details_toolbar">
+                        <thead>
+                            <tr>
+                                <th data-field="id" data-sortable="true" data-filter-control="input">ID</th>
+                                <th data-field="tech_name" data-sortable="true" data-filter-control="input">Technicion</th>
+                                <th data-field="station_id" data-sortable="true" data-filter-control="select">Station</th>
+                                <th data-field="ticket_id" data-sortable="true" data-filter-control="input">Ticket</th>
+                                <th data-field="task_name" data-sortable="true" data-filter-control="select">Task</th>
+                                <th data-field="task_allowances" data-sortable="true" data-filter-control="input">Allowances</th>
+                                <th data-field="visit_date" data-sortable="true" data-filter-control="input">Visit</th>
+                                <!-- <th data-field="record_date" data-sortable="true" data-filter-control="input">Record</th> -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div> -->
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="view_all_details" tabindex="-1" role="dialog" aria-labelledby="ViewAllModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">All Allowances Details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- <div id="details_toolbar" class="select" style="display: flex;">
+                        <input type="text" class="form-control" style="margin-right:5px;" id="details_exportFileName"
+                            placeholder="Export File Name">
+                        <select class="form-control" style="margin-right:5px;">
+                            <option value="">Export Basic</option>
+                            <option value="all">Export All</option>
+                            <option value="selected">Export Selected</option>
+                        </select>
+                        <button class="btn" style="color: #fff;background-color: #6c757d" id="details_print_selected">Print
+                            Selected</button>
+                    </div> -->
+                    <table id="allowancesAllDetailsTbl" data-toggle="table" data-pagination="true" data-search="true"
+                        data-show-columns="true" data-show-toggle="true" data-show-columns-search="true"
+                        data-show-pagination-switch="true" data-show-fullscreen="true" data-searchable="true"
+                        data-show-print="true" data-print-as-filtered-and-sorted-on-ui="true"
+                        data-mobile-responsive="true" data-key-events="true" data-show-search-clear-button="true"
+                        data-filter-control="true" data-show-export="true" data-click-to-select="true"
+                        data-toolbar="#allDetails_toolbar">
+                        <thead>
+                            <tr>
+                                <th data-field="id" data-sortable="true" data-filter-control="input">ID</th>
+                                <th data-field="eng_name" data-sortable="true" data-filter-control="input">Engineer</th>
+                                <th data-field="tech_name" data-sortable="true" data-filter-control="input">Technicion</th>
+                                <th data-field="station_id" data-sortable="true" data-filter-control="select">Station</th>
+                                <th data-field="ticket_id" data-sortable="true" data-filter-control="input">Ticket</th>
+                                <th data-field="task_name" data-sortable="true" data-filter-control="select">Task</th>
+                                <th data-field="task_allowances" data-sortable="true" data-filter-control="input">Allowances</th>
+                                <th data-field="visit_date" data-sortable="true" data-filter-control="input">Visit</th>
+                                <!-- <th data-field="record_date" data-sortable="true" data-filter-control="input">Record</th> -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div> -->
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
+

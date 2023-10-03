@@ -1,0 +1,352 @@
+{% extends "base.html" %}
+
+{% block AMDashboard %}
+<main>
+    <div class="container-fluid px-4">
+        <h1 class="mt-4 mb-4">Dashboard | Status</h1>
+        <div class="row">
+            <div class="col-xl-8">
+                <div class="card mb-4">
+                    <div class="card-header card-date-filter">
+                        <div class="col-xl-7">
+                            <i class="fas fa-chart-bar me-1"></i>
+                            Combo Chart
+                        </div>
+                        <div class="col-xl-5 text-right">
+                            <select id="StatusComboSelect" class="form-control"
+                                onchange="downloadCharts('StatusComboChart','StatusComboSelect')">
+                                <option value="" selected disabled>Download</option>
+                                <option value="png">PNG</option>
+                                <option value="pdf">PDF</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="card-body charts-body">
+                        <div id="StatusComboChart" style="width: 1500px; height: 100%;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4">
+                <div class="card mb-4">
+                    <div class="card-header card-date-filter">
+                        <div class="col-xl-7">
+                            <i class="fas fa-chart-bar me-1"></i>
+                            Pie Chart
+                        </div>
+                        <div class="col-xl-5 text-right">
+                            <select id="StatusPieSelect" class="form-control"
+                                onchange="downloadCharts('StatusPieChart','StatusPieSelect')">
+                                <option value="" selected disabled>Download</option>
+                                <option value="png">PNG</option>
+                                <option value="pdf">PDF</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="card-body charts-body">
+                        <div id="StatusPieChart" style="width: 100%; height: 100%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h1 class="mt-4 mb-4">Dashboard | Tasks</h1>
+        <div class="row">
+            <div class="col-xl-8">
+                <div class="card mb-4">
+                    <div class="card-header card-date-filter">
+                        <div class="col-xl-9">
+                            <i class="fas fa-chart-bar me-1"></i>
+                            Task Allowances
+                        </div>
+                        <div class="col-xl-3 text-right">
+                            <select id="TasksPriceSelect" class="form-control"
+                                onchange="downloadCharts('priceTable','TasksPriceSelect')">
+                                <option value="" selected disabled>Download</option>
+                                <option value="png">PNG</option>
+                                <option value="pdf">PDF</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="card-body charts-body">
+                        <!-- <div id="TasksColumnChart" style="width: 100%; height: 100%;"></div> -->
+                        <div class="row" id="priceTable">
+                            <dov class="col-6">
+                                <table class="table table-hover table-light">
+                                    {% for ft in f_tasks %}
+                                    <tr>
+                                        <th>{{ft.name}}</th>
+                                        <td>{{ft.allowances}}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </table>
+                            </dov>
+                            <dov class="col-6">
+                                <table class="table table-hover table-light">
+                                    {% for lt in l_tasks %}
+                                    <tr>
+                                        <th>{{lt.name}}</th>
+                                        <td>{{lt.allowances}}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </table>
+                            </dov>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4">
+                <div class="card mb-4">
+                    <div class="card-header card-date-filter">
+                        <div class="col-xl-7">
+                            <i class="fas fa-chart-bar me-1"></i>
+                            Pie Chart
+                        </div>
+                        <div class="col-xl-5 text-right">
+                            <select id="TasksPieSelect" class="form-control"
+                                onchange="downloadCharts('TasksPieChart','TasksPieSelect')">
+                                <option value="" selected disabled>Download</option>
+                                <option value="png">PNG</option>
+                                <option value="pdf">PDF</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="card-body charts-body">
+                        <div id="TasksPieChart" style="width: 100%; height: 100%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h1 class="mt-4 mb-4">Dashboard | Time Sheet</h1>
+        <!-- <div class="row mb-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fa-solid fa-filter me-1"></i>
+                        Alarms Filters
+                        <div style="float: right;">
+                            <button class="btn btn-success btn-sm" id="sbmtBTN">Submit</button>
+                            <button class="btn btn-danger btn-sm" id="rstBTN">Reset ALL</button>
+                        </div>
+                    </div>
+                    <div class="card-body make-my-scrollable" style="max-height: 285px;">
+                        <div class="row mb-4">
+                            <div class="col">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <i class="fa-solid fa-filter me-1"></i>
+                                        Site Number
+                                        <button class="btn btn-danger btn-sm float-right" id="snBTN"
+                                            style="padding: 0px 5px;"><i class="fa-solid fa-xmark"></i></button>
+                                    </div>
+                                    <div class="card-body">
+                                        <select class="selectpicker" id="sitenumber" data-live-search="true">
+                                            <option value="" selected disabled>Choose Number...</option>
+                                            {% for sn in siteNumbers %}
+                                            <option value="{{sn}}">{{sn}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <i class="fa-solid fa-filter me-1"></i>
+                                        Alarm Type
+                                        <button class="btn btn-danger btn-sm float-right" id="atBTN"
+                                            style="padding: 0px 5px;"><i class="fa-solid fa-xmark"></i></button>
+                                    </div>
+                                    <div class="card-body">
+                                        <select class="form-control" id="alarmtype">
+                                            <option value="" selected disabled>Choose Type...</option>
+                                            {% for typ in types %}
+                                            <option value="{{typ}}">{{typ}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <i class="fa-solid fa-filter me-1"></i>
+                                        Source
+                                        <button class="btn btn-danger btn-sm float-right" id="sorBTN"
+                                            style="padding: 0px 5px;"><i class="fa-solid fa-xmark"></i></button>
+                                    </div>
+                                    <div class="card-body">
+                                        <select class="form-control" id="source">
+                                            <option value="" selected disabled>Choose Source...</option>
+                                            {% for sor in sources %}
+                                            <option value="{{sor}}">{{sor}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <i class="fa-solid fa-filter me-1"></i>
+                                        Is Active
+                                        <button class="btn btn-danger btn-sm float-right" id="iaBTN"
+                                            style="padding: 0px 5px;"><i class="fa-solid fa-xmark"></i></button>
+                                    </div>
+                                    <div class="card-body">
+                                        <select class="form-control" id="isactive">
+                                            <option value="" selected disabled>Choose Status...</option>
+                                            {% for isa in isactives %}
+                                            <option value="{{isa}}">{{isa}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <i class="fa-solid fa-filter me-1"></i>
+                                        Severity
+                                        <button class="btn btn-danger btn-sm float-right" id="sevBTN"
+                                            style="padding: 0px 5px;"><i class="fa-solid fa-xmark"></i></button>
+                                    </div>
+                                    <div class="card-body">
+                                        <select class="form-control" id="severity">
+                                            <option value="" selected disabled>Choose Severity...</option>
+                                            {% for sev in severities %}
+                                            <option value="{{sev}}">{{sev}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <i class="fa-solid fa-filter me-1"></i>
+                                        Device
+                                        <button class="btn btn-danger btn-sm float-right" id="devBTN"
+                                            style="padding: 0px 5px;"><i class="fa-solid fa-xmark"></i></button>
+                                    </div>
+                                    <div class="card-body">
+                                        <select class="form-control" id="device">
+                                            <option value="" selected disabled>Choose Device...</option>
+                                            {% for dev in devices %}
+                                            <option value="{{dev}}">{{dev}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <i class="fa-solid fa-filter me-1"></i>
+                                        Site Name
+                                        <button class="btn btn-danger btn-sm float-right" id="snameBTN"
+                                            style="padding: 0px 5px;"><i class="fa-solid fa-xmark"></i></button>
+                                    </div>
+                                    <div class="card-body">
+                                        <select class="form-control" id="sitename">
+                                            <option value="" selected disabled>Choose Name...</option>
+                                            {% for sname in siteNames %}
+                                            <option value="{{sname}}">{{sname}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <i class="fa-solid fa-filter me-1"></i>
+                                        Time
+                                        <button class="btn btn-danger btn-sm float-right" id="dtBTN"
+                                            style="padding: 0px 5px;"><i class="fa-solid fa-xmark"></i></button>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-5">
+                                                <input class="form-control" type="time" id="df">
+                                            </div>
+                                            <div class="col-2" style="display: flex;justify-content: center;align-items: center;">
+                                                <label>To</label>
+                                            </div>
+                                            <div class="col-5">
+                                                <input class="form-control" type="time" id="dt">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        <div class="card mb-4">
+            {% if timeSheets|length < 1 %}
+            <div class="card-header bg-danger" style="color: #fff;">
+            {% else %}
+            <div class="card-header">
+                {% endif %}
+                <i class="fas fa-table me-1"></i>
+                Time Sheet Table
+            </div>
+            <div class="card-body table-striped">
+                <div id="toolbar" class="select" style="display: flex;">
+                    <input type="text" class="form-control" style="margin-right:5px;" id="exportFileName"
+                        placeholder="Export File Name">
+                    <select class="form-control" style="margin-right:5px;">
+                        <option value="">Export Basic</option>
+                        <option value="all">Export All</option>
+                        <option value="selected">Export Selected</option>
+                    </select>
+                    <button class="btn" style="color: #fff;background-color: #6c757d" id="print_selected">Print
+                        Selected</button>
+                </div>
+                <table id="timeSheetTbl" data-toggle="table" data-pagination="true" data-search="true"
+                    data-show-columns="true" data-show-toggle="true" data-show-columns-search="true"
+                    data-show-pagination-switch="true" data-show-fullscreen="true" data-searchable="true"
+                    data-show-print="true" data-print-as-filtered-and-sorted-on-ui="true"
+                    data-mobile-responsive="true" data-key-events="true" data-show-search-clear-button="true"
+                    data-filter-control="true" data-show-export="true" data-click-to-select="true"
+                    data-toolbar="#toolbar">
+                    <thead>
+                        <tr>
+                            <th data-field="id" data-sortable="true" data-filter-control="input">ID</th>
+                            <th data-field="eng_name" data-sortable="true" data-filter-control="select">Engineer</th>
+                            <th data-field="tech_name" data-sortable="true" data-filter-control="select">Technicion</th>
+                            <th data-field="station_code" data-sortable="true" data-filter-control="select">Station</th>
+                            <th data-field="ticket_id" data-sortable="true" data-filter-control="input">Ticket</th>
+                            <th data-field="task_id" data-sortable="true" data-filter-control="select">Task</th>
+                            <th data-field="visit_date" data-sortable="true" data-filter-control="input">Visit</th>
+                            <th data-field="notes" data-sortable="true" data-filter-control="input">Notes</th>
+                            <th data-field="record_date" data-sortable="true" data-filter-control="input">Record</th>
+                            <th data-field="area_manager_status" data-sortable="true" data-filter-control="select">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {%for tsh in timeSheets%}
+                        <tr>
+                            <td>{{tsh.id}}</td>
+                            <td>{{tsh.eng_name.first_name}} {{tsh.eng_name.last_name}}</td>
+                            <td>{{tsh.tech_name.first_name}} {{tsh.tech_name.last_name}}</td>
+                            <td>{{tsh.station_code.station_id}}</td>
+                            <td>{{tsh.ticket_id}}</td>
+                            <td>{{tsh.task_id.name}}</td>
+                            <td>{{tsh.visit_date}}</td>
+                            <td>{{tsh.notes}}</td>
+                            <td>{{tsh.record_date}}</td>
+                            <td>{{tsh.area_manager_status}}</td>
+                        </tr>
+                        {%endfor%}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
+

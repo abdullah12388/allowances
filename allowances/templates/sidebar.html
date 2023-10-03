@@ -1,0 +1,157 @@
+<div id="layoutSidenav_nav">
+    <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+        <div class="sb-sidenav-menu">
+            <div class="nav">
+                <div class="sb-sidenav-menu-heading">View</div>
+                {% if user.position.id == 1 %}
+                    {% if '/system/AM/' in request.path %}
+                    <a class="nav-link active" href="/system/AM/">
+                    {% else %}
+                    <a class="nav-link" href="/system/AM/">
+                    {% endif %}
+                    <!-- <a class="nav-link active" href="/tank/dashboard/"> -->
+                        <div class="sb-nav-link-icon"><i class="fas fa-chart-bar me-1"></i></div>
+                        Dashboard
+                    </a>
+
+                    {% if '/system/ManPower/' in request.path %}
+                    <a class="nav-link active" href="/system/ManPower/">
+                    {% else %}
+                    <a class="nav-link" href="/system/ManPower/">
+                    {% endif %}
+                    <!-- <a class="nav-link" href="/tank/sites/"> -->
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-user"></i></div>
+                        Man Power
+                    </a>
+                    
+                    {% if '/system/Tasks/' in request.path %}
+                    <a class="nav-link active" href="/system/Tasks/">
+                    {% else %}
+                    <a class="nav-link" href="/system/Tasks/">
+                    {% endif %}
+                    <!-- <a class="nav-link" href="/tank/sites/"> -->
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-list-check"></i></div>
+                        Tasks
+                    </a>
+
+                    {% if '/system/TimeSheet/ToDo/' in request.path %}
+                    <a class="nav-link active" class="btn btn-primary" data-toggle="collapse" href="#timesheet"
+                        role="button" aria-expanded="True" aria-controls="timesheet">
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-business-time"></i></div>
+                        Time Sheet
+                    </a>
+                    <div class="collapse show" id="timesheet" style="background-color: #000000c9;">
+                        <a class="nav-link active" href="/system/TimeSheet/ToDo/">
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-clipboard-list"></i></div>
+                            Pending
+                        </a>
+                        <a class="nav-link" href="/system/TimeSheet/Done/">
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-clipboard-check"></i></div>
+                            Done
+                        </a>
+                    </div>
+                    {% elif 'TimeSheet/Done/' in request.path %}
+                    <a class="nav-link active" class="btn btn-primary" data-toggle="collapse" href="#timesheet"
+                        role="button" aria-expanded="True" aria-controls="timesheet">
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-business-time"></i></div>
+                        Time Sheet
+                    </a>
+                    <div class="collapse show" id="timesheet" style="background-color: #000000c9;">
+                        <a class="nav-link" href="/system/TimeSheet/ToDo/">
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-clipboard-list"></i></div>
+                            Pending
+                        </a>
+                        <a class="nav-link active" href="/system/TimeSheet/Done/">
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-clipboard-check"></i></div>
+                            Done
+                        </a>
+                    </div>
+                    {% else %}
+                    <a class="nav-link" class="btn btn-primary" data-toggle="collapse" href="#timesheet"
+                        role="button" aria-expanded="false" aria-controls="timesheet">
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-business-time"></i></div>
+                        Time Sheet
+                    </a>
+                    <div class="collapse" id="timesheet" style="background-color: #000000c9;">
+                        <a class="nav-link" href="/system/TimeSheet/ToDo/">
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-clipboard-list"></i></div>
+                            Pending
+                        </a>
+                        <a class="nav-link" href="/system/TimeSheet/Done/">
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-clipboard-check"></i></div>
+                            Done
+                        </a>
+                    </div>
+                    {% endif %}
+
+
+                    {% if '/system/SiteData/' in request.path %}
+                    <a class="nav-link active" href="/system/SiteData/">
+                    {% else %}
+                    <a class="nav-link" href="/system/SiteData/">
+                    {% endif %}
+                    <!-- <a class="nav-link" href="/tank/sites/"> -->
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-industry"></i></div>
+                        Sites Data
+                    </a>
+                    
+                    
+                    {% if '/system/Allowances/' in request.path %}
+                    <a class="nav-link active" href="/system/Allowances/">
+                    {% else %}
+                    <a class="nav-link" href="/system/Allowances/">
+                    {% endif %}
+                    <!-- <a class="nav-link" href="/tank/sites/"> -->
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-coins"></i></div>
+                        Allowances
+                    </a>
+
+                {% elif user.position.id == 2 %}
+                    {% if '/system/SE/' in request.path %}
+                    <a class="nav-link active" href="/system/SE/">
+                    {% else %}
+                    <a class="nav-link" href="/system/SE/">
+                    {% endif %}
+                    <!-- <a class="nav-link active" href="/tank/dashboard/"> -->
+                        <div class="sb-nav-link-icon"><i class="fas fa-chart-bar me-1"></i></div>
+                        Dashboard
+                    </a>
+
+                    {% if '/system/Task/' in request.path %}
+                    <a class="nav-link active" href="/system/Task/">
+                    {% else %}
+                    <a class="nav-link" href="/system/Task/">
+                    {% endif %}
+                    <!-- <a class="nav-link active" href="/tank/dashboard/"> -->
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-list-check"></i></div>
+                        ManPower Task
+                    </a>
+
+                {% elif user.position.id == 4 %}
+                    {% if '/system/CC/Allowances/' in request.path %}
+                    <a class="nav-link active" href="/system/CC/Allowances/">
+                    {% else %}
+                    <a class="nav-link" href="/system/CC/Allowances/">
+                    {% endif %}
+                    <!-- <a class="nav-link" href="/tank/sites/"> -->
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-coins"></i></div>
+                        Allowances
+                    </a>
+                {% endif %}
+                
+
+                {% if '/system/change/password/' in request.path %}
+                <a class="nav-link active" href="/system/change/password/" style="position: absolute;bottom: 0px;">
+                    <div class="sb-nav-link-icon"><i class="fa-solid fa-key"></i></div>
+                    Change Password
+                </a>
+                {% else %}
+                <a class="nav-link" href="/system/change/password/" style="position: absolute;bottom: 0px;">
+                    <div class="sb-nav-link-icon"><i class="fa-solid fa-key"></i></div>
+                    Change Password
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+</div>

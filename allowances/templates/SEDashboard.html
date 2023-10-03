@@ -1,0 +1,360 @@
+{% extends "base.html" %}
+
+{% block SEDashboard %}
+<main>
+    <div class="container-fluid px-4">
+        <!-- <h1 class="mt-4 mb-4">Dashboard | Time Sheet</h1>
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fa-solid fa-filter me-1"></i>
+                        Alarms Filters
+                        <div style="float: right;">
+                            <button class="btn btn-success btn-sm" id="sbmtBTN">Submit</button>
+                            <button class="btn btn-danger btn-sm" id="rstBTN">Reset ALL</button>
+                        </div>
+                    </div>
+                    <div class="card-body make-my-scrollable" style="max-height: 285px;">
+                        <div class="row mb-4">
+                            <div class="col">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <i class="fa-solid fa-filter me-1"></i>
+                                        Site Number
+                                        <button class="btn btn-danger btn-sm float-right" id="snBTN"
+                                            style="padding: 0px 5px;"><i class="fa-solid fa-xmark"></i></button>
+                                    </div>
+                                    <div class="card-body">
+                                        <select class="selectpicker" id="sitenumber" data-live-search="true">
+                                            <option value="" selected disabled>Choose Number...</option>
+                                            {% for sn in siteNumbers %}
+                                            <option value="{{sn}}">{{sn}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <i class="fa-solid fa-filter me-1"></i>
+                                        Alarm Type
+                                        <button class="btn btn-danger btn-sm float-right" id="atBTN"
+                                            style="padding: 0px 5px;"><i class="fa-solid fa-xmark"></i></button>
+                                    </div>
+                                    <div class="card-body">
+                                        <select class="form-control" id="alarmtype">
+                                            <option value="" selected disabled>Choose Type...</option>
+                                            {% for typ in types %}
+                                            <option value="{{typ}}">{{typ}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <i class="fa-solid fa-filter me-1"></i>
+                                        Source
+                                        <button class="btn btn-danger btn-sm float-right" id="sorBTN"
+                                            style="padding: 0px 5px;"><i class="fa-solid fa-xmark"></i></button>
+                                    </div>
+                                    <div class="card-body">
+                                        <select class="form-control" id="source">
+                                            <option value="" selected disabled>Choose Source...</option>
+                                            {% for sor in sources %}
+                                            <option value="{{sor}}">{{sor}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <i class="fa-solid fa-filter me-1"></i>
+                                        Is Active
+                                        <button class="btn btn-danger btn-sm float-right" id="iaBTN"
+                                            style="padding: 0px 5px;"><i class="fa-solid fa-xmark"></i></button>
+                                    </div>
+                                    <div class="card-body">
+                                        <select class="form-control" id="isactive">
+                                            <option value="" selected disabled>Choose Status...</option>
+                                            {% for isa in isactives %}
+                                            <option value="{{isa}}">{{isa}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <i class="fa-solid fa-filter me-1"></i>
+                                        Severity
+                                        <button class="btn btn-danger btn-sm float-right" id="sevBTN"
+                                            style="padding: 0px 5px;"><i class="fa-solid fa-xmark"></i></button>
+                                    </div>
+                                    <div class="card-body">
+                                        <select class="form-control" id="severity">
+                                            <option value="" selected disabled>Choose Severity...</option>
+                                            {% for sev in severities %}
+                                            <option value="{{sev}}">{{sev}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <i class="fa-solid fa-filter me-1"></i>
+                                        Device
+                                        <button class="btn btn-danger btn-sm float-right" id="devBTN"
+                                            style="padding: 0px 5px;"><i class="fa-solid fa-xmark"></i></button>
+                                    </div>
+                                    <div class="card-body">
+                                        <select class="form-control" id="device">
+                                            <option value="" selected disabled>Choose Device...</option>
+                                            {% for dev in devices %}
+                                            <option value="{{dev}}">{{dev}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <i class="fa-solid fa-filter me-1"></i>
+                                        Site Name
+                                        <button class="btn btn-danger btn-sm float-right" id="snameBTN"
+                                            style="padding: 0px 5px;"><i class="fa-solid fa-xmark"></i></button>
+                                    </div>
+                                    <div class="card-body">
+                                        <select class="form-control" id="sitename">
+                                            <option value="" selected disabled>Choose Name...</option>
+                                            {% for sname in siteNames %}
+                                            <option value="{{sname}}">{{sname}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <i class="fa-solid fa-filter me-1"></i>
+                                        Time
+                                        <button class="btn btn-danger btn-sm float-right" id="dtBTN"
+                                            style="padding: 0px 5px;"><i class="fa-solid fa-xmark"></i></button>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-5">
+                                                <input class="form-control" type="time" id="df">
+                                            </div>
+                                            <div class="col-2" style="display: flex;justify-content: center;align-items: center;">
+                                                <label>To</label>
+                                            </div>
+                                            <div class="col-5">
+                                                <input class="form-control" type="time" id="dt">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        <!-- <div class="card mb-4">
+            {% if tasks|length < 1 %}
+            <div class="card-header bg-danger" style="color: #fff;">
+            {% else %}
+            <div class="card-header">
+            {% endif %}
+                <i class="fas fa-table me-1"></i>
+                Tasks Table
+            </div>
+            <div class="card-body table-striped">
+                <div id="toolbar" class="select" style="display: flex;">
+                    <input type="text" class="form-control" style="margin-right:5px;" id="exportFileName"
+                        placeholder="Export File Name">
+                    <select class="form-control" style="margin-right:5px;">
+                        <option value="">Export Basic</option>
+                        <option value="all">Export All</option>
+                        <option value="selected">Export Selected</option>
+                    </select>
+                    <button class="btn" style="color: #fff;background-color: #6c757d" id="print_selected">Print
+                        Selected</button>
+                </div>
+                <table id="TasksTbl" data-toggle="table" data-pagination="true" data-search="true"
+                    data-show-columns="true" data-show-toggle="true" data-show-columns-search="true"
+                    data-show-pagination-switch="true" data-show-fullscreen="true" data-searchable="true"
+                    data-show-print="true" data-print-as-filtered-and-sorted-on-ui="true"
+                    data-mobile-responsive="true" data-key-events="true" data-show-search-clear-button="true"
+                    data-filter-control="true" data-show-export="true" data-click-to-select="true"
+                    data-toolbar="#toolbar">
+                    <thead>
+                        <tr>
+                            <th data-field="id" data-sortable="true" data-filter-control="input">ID</th>
+                            <th data-field="name" data-sortable="true" data-filter-control="select">Task Name</th>
+                            <th data-field="allowances" data-sortable="true" data-filter-control="input">Task Allowances</th>
+                            <th data-field="man_power_type" data-sortable="true" data-filter-control="select">Man Power Type</th>
+                            <th data-field="add_date" data-sortable="true" data-filter-control="input">Add Date</th>
+                            <th data-sortable="true" data-filter-control="input">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {%for task in tasks%}
+                        <tr>
+                            <td>{{task.id}}</td>
+                            <td>{{task.name}}</td>
+                            <td>{{task.allowances}}</td>
+                            <td>{{task.get_man_power_type_display}}</td>
+                            <td>{{task.add_date}}</td>
+                            <td class="d-flex justify-content-center align-items-center">
+                                <button class="btn btn-success mr-2" type="button" data-toggle="modal" data-target="#edit_modal_{{task.id}}"><i class="fa-solid fa-pen"></i></button>
+                                <button class="btn btn-danger ml-2" type="button" data-toggle="modal" data-target="#delete_modal_{{task.id}}"><i class="fa-solid fa-trash"></i></button>
+                            </td>
+                        </tr>
+                        {%endfor%}
+                    </tbody>
+                </table>
+            </div>
+        </div> -->
+        <div class="card mb-4 mt-3">
+            {% if timesheet|length < 1 %}
+            <div class="card-header bg-danger" style="color: #fff;">
+            {% else %}
+            <div class="card-header">
+                {% endif %}
+                <i class="fas fa-table me-1"></i>
+                Sites Data Table
+            </div>
+            <div class="card-body table-striped">
+                <div id="toolbar" class="select" style="display: flex;">
+                    <input type="text" class="form-control" style="margin-right:5px;" id="exportFileName"
+                        placeholder="Export File Name">
+                    <select class="form-control" style="margin-right:5px;">
+                        <option value="">Export Basic</option>
+                        <option value="all">Export All</option>
+                        <option value="selected">Export Selected</option>
+                    </select>
+                    <button class="btn" style="color: #fff;background-color: #6c757d" id="print_selected">Print
+                        Selected</button>
+                </div>
+                <table id="siteEngineerTbl" data-toggle="table" data-pagination="true" data-search="true"
+                    data-show-columns="true" data-show-toggle="true" data-show-columns-search="true"
+                    data-show-pagination-switch="true" data-show-fullscreen="true" data-searchable="true"
+                    data-show-print="true" data-print-as-filtered-and-sorted-on-ui="true"
+                    data-mobile-responsive="true" data-key-events="true" data-show-search-clear-button="true"
+                    data-filter-control="true" data-show-export="true" data-click-to-select="true"
+                    data-toolbar="#toolbar">
+                    <thead>
+                        <tr>
+                            <th data-field="id" data-sortable="true" data-filter-control="input">ID</th>
+                            <th data-field="eng_name__username" data-sortable="true" data-filter-control="select">Eng. Username</th>
+                            <th data-field="tech_name__first_name" data-sortable="true" data-filter-control="select">Technicion</th>
+                            <th data-field="station_code__station_id" data-sortable="true" data-filter-control="select">Station ID</th>
+                            <th data-field="ticket_id" data-sortable="true" data-filter-control="input">Ticket</th>
+                            <th data-field="task_id__name" data-sortable="true" data-filter-control="select">Task Name</th>
+                            <th data-field="visit_date" data-sortable="true" data-filter-control="input">Visit</th>
+                            <th data-field="notes" data-sortable="true" data-filter-control="input">Notes</th>
+                            <th data-field="area_manager_status" data-sortable="true" data-filter-control="input">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {%for tsh in timesheet%}
+                        <tr>
+                            <td>{{tsh.id}}</td>
+                            <td>{{tsh.eng_name.username}}</td>
+                            <td>{{tsh.tech_name.first_name}} {{tsh.tech_name.last_name}}</td>
+                            <td>{{tsh.station_code.station_id}}</td>
+                            <td>{{tsh.ticket_id}}</td>
+                            <td>{{tsh.task_id.name}}</td>
+                            <td>{{tsh.visit_date}}</td>
+                            <td>{{tsh.notes}}</td>
+                            <td>
+                                {% if tsh.area_manager_status == 'a' %}
+                                <span style="color: #28a745;font-weight: bold;">{{tsh.get_area_manager_status_display}}</span>
+                                {% elif tsh.area_manager_status == 'na' %}
+                                <span style="color: #dc3545;font-weight: bold;">{{tsh.get_area_manager_status_display}}</span>
+                                {% else %}
+                                <span style="color: #6c757d;font-weight: bold;">Pending</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {%endfor%}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- <nav aria-label="Page navigation">
+            {% if paginator.has_other_pages %}
+            <ul class="pagination justify-content-center">
+                {% if paginator.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ paginator.previous_page_number }}">Previous</a>
+                </li>
+                {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1">Previous</a>
+                </li>
+                {% endif %}
+        
+                {% if paginator.number > 3 %}
+                <li class="page-item">
+                    <a class="page-link" href="?page=1">1</a>
+                </li>
+                <li class="page-item disabled">
+                    <span class="page-link">...</span>
+                </li>
+                {% endif %}
+        
+                {% for i in paginator.paginator.page_range %}
+                    {% if i > paginator.number|add:'-3' and i < paginator.number|add:'3' %}
+                        {% if paginator.number == i %}
+                            <li class="page-item active">
+                                <span class="page-link">
+                                    {{ i }}
+                                    <span class="sr-only">(current)</span>
+                                </span>
+                            </li>
+                        {% else %}
+                            <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+        
+                {% if paginator.number < paginator.paginator.num_pages|add:'-2' %}
+                <li class="page-item disabled">
+                    <span class="page-link">...</span>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ paginator.paginator.num_pages }}">{{ paginator.paginator.num_pages }}</a>
+                </li>
+                {% endif %}
+        
+                {% if paginator.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ paginator.next_page_number }}">Next</a>
+                </li>
+                {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1">Next</a>
+                </li>
+                {% endif %}
+            </ul>
+            {% endif %}
+        </nav> -->
+    </div>
+</main>
+{% endblock %}
+
